@@ -1,0 +1,108 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">日志管理</h3>
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 350px;">
+						<input type="text" name="table_search" id="searchNameId"
+							class="form-control pull-right" placeholder="用户名">
+
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default btn-search">
+                                <i class="fa fa-search"></i>
+							</button>
+							<button type="button" class="btn btn-default btn-delete">删除</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+						    <th><input type="checkbox" id="checkAll">全选</th>					
+							<th>用户名</th>
+							<th>操作</th>
+							<th>请求方法</th>
+							<th>请求参数</th>
+							<th>IP</th>
+							<th>执行时长</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyId">
+					    <tr>
+					       <td colspan="7">数据正在加载中...</td>
+					    </tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="pageId" class="box-footer clearfix" dm="100">
+			  
+			</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</div>
+</div>
+<script type="text/javascript">
+   //JS 问题如何解决? console.log(),debugger,排除法
+   $(function(){
+	   $("#pageId").load("doPageUI");
+   });
+   
+   
+			
+	function doGetObjects(){
+				var url ="log/doFindPageObjects";
+				var params="pageCurrent=1";
+				$.getJSON(url,params,function(result){
+					dohandleQueryResult(result);
+				});
+			}
+   
+   
+
+	function dohandleQueryResult(result){ //这里的result 就是JsonResult
+		console.log("result",result);
+		if(result.state ==1){
+			//1、将当前页的日志信息，呈现当前页的日志记录信息
+			/* console.log(result.data.records); */
+			doSetTableBodyRows(result.data.records);
+			// 2、将分页信息
+		}else{
+			alert(result.message);
+		}
+		
+	}
+	function doSetTableBodyRows(record){
+		//1、获取tbody对象并清空内容
+		var tbody =$("#tbodyId"); //这里的tbodyId 就是 tbody的ID的值
+		tbody.empty();
+		for(var i=0;i<record.length;i++){//循环一次，取一次
+			var trs =  `<tr>
+						<td><input type ='checkbox'></td>
+						<td>${record[i].username}</td>
+						<td>${record[i].operation}</td>
+						<td>${record[i].method}</td>
+						<td>${record[i].params}</td>
+						<td>${record[i].ip}</td>
+						<td>${record[i].time}</td>
+					 </tr>`;
+				tbody.append(trs);	 
+		}
+	}
+	
+	$(function(){
+		doGetObjects();
+	});
+	
+		   
+</script>
+
+
+
+
+
+

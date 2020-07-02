@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  
+  
+  <!-- 方法返回的是一个int类型，所以resultType为int -->
+ <mapper namespace="com.renbenshan.dao.SysLogDao">
+ 	<select id="getRowCount" resultType="int">
+ 		select count(*) 
+ 		from sys_logs
+ 		<where>
+	 		<if test ="username !=null and username !='' ">
+	 			 username like concat("%",#{username},"%")
+	 		</if>
+ 		
+ 		</where>
+ 		
+ 	</select>
+ 	
+ 	
+ 	<!-- 方法返回的是一个list集合类型，所以resultType为pojo的类的全限定类名-->
+ 	<select id="findPageObjects" resultType="com.renbenshan.pojo.SysLog">
+ 		select * 
+ 		from sys_logs
+ 		<where>
+	 		<if test ="username !=null and username !='' ">
+	 			 username like concat("%",#{username},"%")
+	 		</if>
+ 		</where>
+ 		order by createdTime desc
+ 		limit #{startIndex},#{pageSize}
+ 	</select>
+ 	
+ 	
+ </mapper>
