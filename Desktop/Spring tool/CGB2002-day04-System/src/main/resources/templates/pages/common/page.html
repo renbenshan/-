@@ -8,6 +8,16 @@
 	<li><a class="pageCurrent">当前页(1)</a></li>
 </ul>
 <script type="text/javascript">
+function doSetPage(page){
+	//1.始化数据
+	$(".rowCount").html("总记录数("+page.rowCount+")");
+	$(".pageCount").html("总页数("+page.pageCount+")");
+	$(".pageCurrent").html("当前页("+page.pageCurrent+")");
+	//2.绑定数据(为后续对此数据的使用提供服务)
+	$("#pageId").data("pageCurrent",page.pageCurrent);
+	$("#pageId").data("pageCount",page.pageCount);
+}
+
 
 </script>
 

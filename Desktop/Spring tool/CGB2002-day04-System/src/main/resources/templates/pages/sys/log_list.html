@@ -71,6 +71,9 @@
 			/* console.log(result.data.records); */
 			doSetTableBodyRows(result.data.records);
 			// 2、将分页信息
+			
+			doSetPage(result.data); 
+			
 		}else{
 			alert(result.message);
 		}

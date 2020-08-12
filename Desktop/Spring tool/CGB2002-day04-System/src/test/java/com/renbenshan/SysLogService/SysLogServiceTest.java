@@ -17,7 +17,9 @@ public class SysLogServiceTest {
 	@Test
 	public void testfindPageObjects() {
 		PageObject<SysLog> pageObject =sysLogService.findPageObjects("admin", 1);
-		System.out.println(pageObject);
+		int a =pageObject.getPageSize();
+		System.out.println("PageSize:"+a);
+		
 	}
 
 }

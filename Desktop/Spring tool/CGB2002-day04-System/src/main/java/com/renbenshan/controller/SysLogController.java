@@ -15,19 +15,17 @@ import com.renbenshan.service.SysLogService;
 
 @RequestMapping("log")
 public class SysLogController {
-	
+
 	@Autowired
 	private SysLogService sysLogService;
 	
-	
 	@RequestMapping("doFindPageObjects")
 	@ResponseBody
-	public JsonResult doFindPage(String username, Integer pageCurrent) {
-		PageObject<SysLog> list=sysLogService.findPageObjects(username, pageCurrent);
-		
-		return new JsonResult(list);
+	public JsonResult doFindPageObjects(String username,
+			Integer pageCurrent){
+		PageObject<SysLog> pageObject=
+		sysLogService.findPageObjects(username, pageCurrent);
+		return new JsonResult(pageObject);//DispatcherServlet
 	}
-	
-	
 	
 }

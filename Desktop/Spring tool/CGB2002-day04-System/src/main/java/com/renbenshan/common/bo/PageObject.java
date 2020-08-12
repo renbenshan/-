@@ -3,6 +3,9 @@ package com.renbenshan.common.bo;
 import java.io.Serializable;
 import java.util.List;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * 封装数据的对象 vo 
  * @author renbenshan
@@ -12,61 +15,32 @@ import java.util.List;
 //类上定义的泛型，为了约束属性，方法参数，方法返回值类型。
 
 
-public class PageObject<T> implements Serializable {
-
-	private static final long serialVersionUID = -3152437572807923858L;
-	/**当前页的页码值*/
-	private Integer pageCurrent=1;
-   /**页面大小*/
-   private Integer pageSize=3;
-   /**总行数(通过查询获得)*/
-   private Integer rowCount=0;
-   /**总页数(通过计算获得)*/
-   private Integer pageCount=0;
-   /**当前页记录*/
-   private List<T> records;
-   public PageObject(){}
-	public PageObject(Integer pageCurrent, Integer pageSize, Integer rowCount, List<T> records) {
+@Data
+@NoArgsConstructor
+public class PageObject<T> implements Serializable{
+	  private static final long serialVersionUID = 5727659641634783999L;
+	  /**当前页记录*/
+      private List<T> records;
+      /**总行数(通过查询获得)*/
+      private Integer rowCount;
+      /**总页数*/
+      private Integer pageCount;
+      /**每页要显示多少条记录*/
+      private Integer pageSize;
+      /**当前页的页码值*/
+      private Integer pageCurrent;
+	  public PageObject(List<T> records, Integer rowCount,Integer pageSize, Integer pageCurrent) {
 		super();
-		this.pageCurrent = pageCurrent;
-		this.pageSize = pageSize;
-		this.rowCount = rowCount;
 		this.records = records;
+		this.rowCount = rowCount;
+		this.pageSize = pageSize;
+		this.pageCurrent = pageCurrent;
+		//计算分页：方案一
 //		this.pageCount=rowCount/pageSize;
 //		if(rowCount%pageSize!=0) {
-//			pageCount++;
+//			this.pageCount++;
 //		}
+		//计算分析：方案二
 		this.pageCount=(rowCount-1)/pageSize+1;
-	}
-	public Integer getPageCurrent() {
-		return pageCurrent;
-	}
-	public void setPageCurrent(Integer pageCurrent) {
-		this.pageCurrent = pageCurrent;
-	}
-	public Integer getPageSize() {
-		return pageSize;
-	}
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
-	public Integer getRowCount() {
-		return rowCount;
-	}
-	public void setRowCount(Integer rowCount) {
-		this.rowCount = rowCount;
-	}
-	
-	public Integer getPageCount() {
-		return pageCount;
-	}
-	public void setPageCount(Integer pageCount) {
-	   this.pageCount = pageCount;
-	}
-	public List<T> getRecords() {
-		return records;
-	}
-	public void setRecords(List<T> records) {
-		this.records = records;
-	} 
+	 }
 }
